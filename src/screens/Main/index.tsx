@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Alert, Text } from 'react-native';
-import MapView from 'react-native-maps';
-import { Container } from './styles';
-import Modal from '../../components/Modal';
-import SelectReportCategory from './ModalContent/SelectReportCategory';
-import ReportForm from './ModalContent/ReportForm';
-import * as Location from 'expo-location';
+import React, { useState, useEffect } from "react";
+import { Alert, Text } from "react-native";
+import MapView from "react-native-maps";
+import { Container } from "./styles";
+import Modal from "../../components/Modal";
+import SelectReportCategory from "./ModalContent/SelectReportCategory";
+import ReportForm from "./ModalContent/ReportForm";
+import * as Location from "expo-location";
+import api from "../../services/api";
 
-import mapStyle from '../../shared/Maps/styles.json';
+import mapStyle from "../../shared/Maps/styles.json";
 
 export default function Main() {
   const [region, setRegion] = useState({
@@ -18,6 +19,22 @@ export default function Main() {
   });
 
   const [modalIndex, setModalIndex] = useState(0);
+
+  function saveReport () {
+    api
+      .post("report", {
+        id_user: 2,
+        latitude: -23.6430259,
+        longitude: -46.5523647,
+        address: "R. Marina, 1399 - Campestre, Santo André - SP",
+        cep: "09070-510",
+        type: 1,
+        date: "2021-10-20",
+        description: "Fui roubada",
+      })
+      .then(() => console.log("deu bom!"))
+      .catch(() => console.log("deu erro!"));
+  };
 
   const getCurrentLocation = async () => {
     const locationPermission = await requestLocationPermission();
@@ -41,10 +58,10 @@ export default function Main() {
   const requestLocationPermission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
 
-    if (status !== 'granted') {
+    if (status !== "granted") {
       Alert.alert(
-        'Erro',
-        'Você precisa aceitar as permissões de localização para utilizar o App.'
+        "Erro",
+        "Você precisa aceitar as permissões de localização para utilizar o App."
       );
       return false;
     }
@@ -55,24 +72,25 @@ export default function Main() {
     switch (modalIndex) {
       case 0:
       case 1:
-        return 'Novo Reporte';
+        return "Novo Reporte";
       case 2:
-        return 'Sucesso';
+        return "Sucesso";
       default:
-        return '';
+        return "";
     }
   }
 
   function fillSubtitle() {
     switch (modalIndex) {
       case 0:
-        return 'Você deseja reportar um ocorrido recente ou antigo?';
+        return "Você deseja reportar um ocorrido recente ou antigo?";
       case 1:
-        return 'Que triste que passou por essa situação, mas estamos aqui para ajudar.Nos conte o que aconteceu, quando e onde.';
+        return "Que triste que passou por essa situação, mas estamos aqui para ajudar.Nos conte o que aconteceu, quando e onde.";
       case 2:
-        return 'Recebemos seu reporte com sucesso, esperamos que isso não aconteça de novo!Outras usuárias por perto receberão notificação do ocorrido, obrigado pela colaboração.';
+        saveReport();
+        return "Recebemos seu reporte com sucesso, esperamos que isso não aconteça de novo!Outras usuárias por perto receberão notificação do ocorrido, obrigado pela colaboração.";
       default:
-        return '';
+        return "";
     }
   }
 
