@@ -16,6 +16,7 @@ export default function Input({
   label,
   multiline,
   numberOfLines,
+  ...rest
 }: Props) {
   const [isFocused, setIsFocused] = useState(false);
   return (
@@ -30,6 +31,7 @@ export default function Input({
         multiline={multiline}
         numberOfLines={numberOfLines}
         textAlignVertical="top"
+        {...rest}
       />
     </Container>
   );

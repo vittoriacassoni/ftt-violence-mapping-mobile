@@ -5,21 +5,33 @@ import Input from '../../../../components/Input';
 
 interface Props {
   containerStyle?: ViewStyle;
+  setAddress(adress: string): void;
+  setDate(date: string): void;
+  setDescription(description: string): void;
 }
 
-export default function ReportForm({ containerStyle }: Props) {
+export default function ReportForm({
+  containerStyle,
+  setAddress,
+  setDate,
+  setDescription,
+}: Props) {
   return (
     <Container style={containerStyle}>
       <Input
         placeholder="Local"
         containerStyle={{ marginBottom: 16 }}
         label="Local"
+        onChangeText={(text) => {
+          setAddress(text);
+        }}
       />
 
       <Input
-        placeholder="Data e hora"
+        placeholder="00/00/0000"
         containerStyle={{ marginBottom: 16 }}
         label="Data e Hora"
+        onChangeText={(text) => setDate(text)}
       />
 
       <Input
@@ -28,6 +40,7 @@ export default function ReportForm({ containerStyle }: Props) {
         label="Descrição"
         multiline={true}
         numberOfLines={4}
+        onChangeText={(text) => setDescription(text)}
       />
     </Container>
   );
