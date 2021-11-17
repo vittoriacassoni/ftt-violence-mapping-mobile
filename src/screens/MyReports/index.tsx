@@ -1,29 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import Card from "../../components/Card";
 import { Container, Title } from "./styles";
+import api from "../../services/api";
+
+interface Report {
+  id_user: string;
+  latitude: string;
+  longitude: string;
+  address: string;
+  cep: string;
+  type: string;
+  date: string;
+  description: string;
+}
 
 export default function Reports() {
+
+const [reports,setReports] = useState<Report[]>([])
+
+useEffect(() => {
+  api.get("/reports").then(response => {
+    setReports(response.data);
+  })
+},[])
+
   return (
     <Container>
       <Title>Meus Reportes</Title>
       <View style = {{borderBottomColor: "#213C73", borderBottomWidth: 2,  marginBottom: 24, width: 40 }}/>
       <SafeAreaView>
         <ScrollView>
-          <Card
-            date="27/10/2021"
-            address="Estr. dos Alvarengas, 4001 - Alvarenga, São Bernardo do Campo - SP, 09850-550"
+          {reports.map((report)=>{
+            return <Card 
+            date= {report.date}
+            address={report.address}
           />
-
-          <Card
-            date="20/10/2021"
-            address="Estr. dos Alvarengas, 4001 - Alvarenga, São Bernardo do Campo - SP, 09850-550"
-          />
-
-          <Card
-            date="18/10/2021"
-            address="Estr. dos Alvarengas, 4001 - Alvarenga, São Bernardo do Campo - SP, 09850-550"
-          />
+          })}
         </ScrollView>
       </SafeAreaView>
     </Container>
