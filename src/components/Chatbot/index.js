@@ -63,8 +63,31 @@ const steps = [
   },
   {
     id: '20',
-    message: 'LOGIN',
+    message: 'Perfeito, seja bem-vinda de volta, nos informe o seu e-mail cadastrado.',
+    trigger: '21',
+    placeholder: 'Digite seu e-mail no formato email@email.com',
   },
+  {
+    id: '21',
+    user: true,
+    trigger: '22',
+  },
+  {
+    id: '22',
+    message: 'Agora, por favor, digite a sua senha.',
+    trigger: '23',
+  },
+  {
+    id: '23',
+    user: true,
+    trigger: '24',
+  },
+  {
+    id: '24',
+    message:
+      'Muito obrigada pelas informações, aproveite o aplicativo!',
+    end: true,
+  }
 ];
 
 export default function ChatBot() {
