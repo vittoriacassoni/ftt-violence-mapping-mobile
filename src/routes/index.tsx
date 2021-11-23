@@ -3,15 +3,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppRoutes from './app.routes';
 import AuthRoutes from './auth.routes';
 import { User } from '../shared/dtos/User';
-
-const user = {
-  id: undefined,
-  name: 'Vittoria',
-  sobrenome: 'Cassoni',
-};
+import { useAuth } from '../hooks/auth';
 
 export default function Routes() {
-  //user: User) {
+  const { user } = useAuth();
+
   return (
     <NavigationContainer>
       {!!user?.id && <AppRoutes />}

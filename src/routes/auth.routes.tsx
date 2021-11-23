@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CreateAccount from '../screens/CreateAccount';
-import Login from '../screens/Login';
+// import Login from '../screens/Login';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +25,7 @@ export default function AppRoutes() {
       })}
     >
       <Tab.Screen name="CreateAccount" component={CreateAccount} />
-      <Tab.Screen name="Login" component={Login} />
+      {/* <Tab.Screen name="Login" component={Login} /> */}
     </Tab.Navigator>
   );
 }
